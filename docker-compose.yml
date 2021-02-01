@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+    auth:
+        image: ramailh/auth
+        ports:
+            - "9081:9081"
+        container_name: auth
+        restart: always
+        command: sh -c "
+            npx sequelize db:migrate
+            && node app.js"
+        env_file: 
+            - auth.env
+    
+    fetch:
+        image: ramailh/fetch
+        ports:
+            - "9080:9080"
+        container_name: fetch
+        restart: always
+        env_file: 
+            - fetch.env
+
+    db:
+        image: postgres
+        ports:
+            - 5432
+        container_name: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: postgres
+        volumes:
+            - ~/postgres/data:/var/lib/postgresql/data
+
+    redis:
+        image: redis
+        ports:
+            - 6379
+        container_name: redis
+        restart: always
+        volumes:
+            - ~/redis/data:/data
