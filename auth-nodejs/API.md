@@ -1,6 +1,6 @@
 **Auth Server**
 ----
-Auth server that handles register, login, and verify token.
+Auth server that handles register, login, and verify token. Running on port `9081`
 
 * **URL**
   /register
